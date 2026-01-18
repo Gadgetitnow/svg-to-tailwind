@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG to Tailwind Converter | Jesse DevUtils</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen p-8 font-sans">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-teal-400 mb-2">SVG &rarr; Tailwind</h1>
+        <p class="text-slate-400 mb-8 text-slate-300">Convert raw SVG code into a clean Tailwind CSS component. Built by Jesse DevUtils.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-medium mb-2 uppercase tracking-wide text-slate-400">Input SVG Code</label>
+                <textarea id="input" class="w-full h-80 bg-slate-800 border border-slate-700 p-4 rounded text-sm font-mono focus:ring-2 focus:ring-teal-500 outline-none transition-all" placeholder="Paste <svg> here..."></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-2 uppercase tracking-wide text-slate-400">Tailwind Component</label>
+                <textarea id="output" readonly class="w-full h-80 bg-slate-950 border border-slate-800 p-4 rounded text-sm font-mono text-teal-300 shadow-inner" placeholder="Cleaned SVG will appear here..."></textarea>
+            </div>
+        </div>
+        <div class="mt-6 flex gap-4">
+            <button onclick="copyOutput()" class="bg-teal-600 hover:bg-teal-500 px-8 py-3 rounded font-bold transition-all transform active:scale-95 shadow-lg">Copy Tailwind Code</button>
+        </div>
+    </div>
+    <script>
+        const input = document.getElementById('input');
+        const output = document.getElementById('output');
+        input.addEventListener('input', () => {
+            let val = input.value;
+            let cleaned = val.replace(/class="[^"]*"/g, '').replace(/<svg/g, '<svg class="w-6 h-6 text-gray-600"');
+            output.value = cleaned;
+        });
+        function copyOutput() {
+            if(!output.value) return;
+            output.select();
+            document.execCommand('copy');
+            alert('Tailwind SVG code copied!');
+        }
+    </script>
+</body>
+</html>
